@@ -1,3 +1,4 @@
+--author https://github.com/Herover/fancytext/
 local PANEL = {}
 
 --[[---------------------------------------------------------
