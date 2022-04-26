@@ -1,5 +1,5 @@
 -- НИЧЕГО НЕ ТРОГАТЬ
-
+-- vk api author: https://github.com/LuaFan2/vklib 
 vk = {}
 
 vk.Version = '5.103' -- версия API
