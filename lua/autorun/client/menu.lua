@@ -303,7 +303,7 @@ end)
 
 concommand.Add("vk_giveaway", MainMenu)
 
-concommand.Add("vk_giveaway_credits", function() print('Система написана для проекта AnimeLife. Все права принадлежат только автору enmanish | vk.com/enmanish') end)
+concommand.Add("vk_giveaway_credits", function() print('Система написана для проекта AnimeLife. Все права принадлежат автору enmanish (ciel) | vk.com/sss_okay') end)
 
 local s = "giveaways/results/results.wav"
 
@@ -399,8 +399,6 @@ local function resultspanel()
 
   for i=1, #results do
     local pr_txt = i..' место: steamid: '..results[i].steamid..'    ВК: '..results[i].vkid
-    --surface.SetFont('hud_subs_big')
-    --local pr_txt_w = select(1, surface.GetTextSize(pr_txt))
     prize = vgui.Create('DLabel',mainmenu)
     prize:SetPos(15,50+30*i)
     prize:SetText(pr_txt)
@@ -417,13 +415,3 @@ local function resultspanel()
 end
 
 net.Receive('open_results_panel', resultspanel)
-
---local function VK_chat(ply, text)
---	if string.find(text, '^[!/]'..vkgivss.command) then
---		if ply == LocalPlayer() then
---			RunConsoleCommand('vk_giveaway')
---		end
---		return true
---	end
---end
---hook.Add('OnPlayerChat', 'VK_chat', VK_chat)
