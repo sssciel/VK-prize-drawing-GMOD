@@ -3,6 +3,8 @@
 IN THE PROCESS OF REWORKING
 IT IS NOT WORKING AT THE MOMENT
 
+Requires start.UI to work: https://github.com/sssciel/stark.UI
+
 An addon that allows you to hold contests in VK for gmod
 
 https://www.youtube.com/watch?v=wTHX596bGUc
