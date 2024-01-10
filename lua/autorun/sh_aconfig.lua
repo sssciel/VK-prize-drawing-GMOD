@@ -1,10 +1,19 @@
-﻿vkgivss = {}
+﻿--[[
 
-vkgivss.activate = true -- работает ли система
+GENERAL CONFIG
 
+]]--
+
+vkgivss = {}
+
+-- Is giveaway is active
+vkgivss.activate = true
+
+-- VK token version
 vkgivss.version = 5.10 -- версия токена
 
-vkgivss.dateto = { -- окончание конкурса, используется в таймере обратного отсчёта
+-- Giveaway expire day
+vkgivss.dateto = {
 
     year  = 2020,
     month = 07,
@@ -69,16 +78,65 @@ vkgivss.groupid = '167656439'
 
 vkgivss.postid = '1429' -- ID поста
 
-vkgivss.information = 'AnimeLife проводит новый конкурс, посвященный дню рождения проекта. Участвовать в нём сможет любой игрок сервера. Чтобы узнать подробнее и участвовать в конкурсе, нажимите на кнопку Участвовать' -- информация на начальной панели
+vkgivss.information = [[
+    Server N is holding a new contest dedicated to the project's birthday. Any server player can participate in it. To learn more and participate in the contest, click on the Participate button
+]]
 
-vkgivss.title = 'Конкурс' -- заголовок в меню
+vkgivss.title = 'VK prize drawing' -- заголовок в меню
 
 vkgivss.cycletime = 1800 -- время между сообщениями в чате
 
-vkgivss.command = 'конкурс' -- команда для открытия меню БЕЗ ! или /
+vkgivss.command = 'prizedrawing' -- команда для открытия меню БЕЗ ! или /
 
 vkgivss.chatmessage = '' -- настраивается в auto_chatmessages.lua
 
 vkgivss.giftfor = true -- подарок за участие
 
 vkgivss.giftmoney = 5000 -- подарок 5000 за участие
+
+--[[
+
+CHAT MESSAGES CONFIG
+
+]]--
+
+-- Prefix in the chat
+local PREFIX = {Color(158, 53, 210), "EWards | "}
+
+-- Cycle in the chat
+local cycle_time = vkgivss.cycletime
+
+-- Color of a text in chat
+local text = Color(245,245,245) -- цвет текста
+
+-- Messages in the chat
+local MESSAGES = {
+	{Color(255, 200, 50), "A big prizedrawing is currently taking place in the VK group. ", text, "More information: ", Color(255,0,0), "!prizedrawing "},
+}
+
+-- Don't touch
+if (SERVER) then
+
+	if !vkgivss.activate then return end
+	util.AddNetworkString("AutoChatMessage")
+	local curmsg = 1
+	
+	timer.Create("AutoChatMessages", cycle_time, 0, function()
+		net.Start("AutoChatMessage")
+			net.WriteUInt(curmsg, 16)
+		net.Broadcast()
+
+		curmsg = curmsg + 1
+		if (curmsg > #MESSAGES) then
+			curmsg = 1
+		end
+	end)
+else
+	net.Receive("AutoChatMessage", function()
+		local t = {}
+		table.Add(t, PREFIX)
+		table.Add(t, MESSAGES[net.ReadUInt(16)])
+		
+		chat.AddText(unpack(t))
+	end)
+end
